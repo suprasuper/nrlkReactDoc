@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation Niralakka - Architecture</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #4a90e2;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: #333;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin-top: 30px;
+      border-bottom: 2px solid #4a90e2;
+      padding-bottom: 5px;
+    }
+
+    h3 {
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #4a90e2;
+    }
+
+    ul {
+      margin: 10px 0 20px 20px;
+    }
+
+    code {
+      background-color: #eef1f5;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.95em;
+    }
+
+    pre {
+      background-color: #eef1f5;
+      padding: 10px;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+
+    section {
+      margin-bottom: 30px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      color: #777;
+      font-size: 0.9em;
+      border-top: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Documentation Niralakka</h1>
+</header>
+
+<main>
+
+  <section>
+    <h2>Architecture du projet</h2>
+    <p>Le projet est structuré pour séparer clairement les responsabilités et faciliter la maintenance :</p>
+    <pre>
+/node_modules
+/public
+/src
+    </pre>
+  </section>
+
+  <section>
+    <h2>1. node_modules</h2>
+    <p>Contient toutes les dépendances du projet installées via <code>npm</code> ou <code>yarn</code>.</p>
+  </section>
+
+  <section>
+    <h2>2. public</h2>
+    <ul>
+      <li><code>index.html</code> : point d’entrée de l’application.</li>
+      <li><code>.htaccess</code> : configuration du serveur pour la réécriture d’URL.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>3. src</h2>
+    <p>Contient tout le code source de l’application React.</p>
+
+    <h3>3.1 api</h3>
+    <p>Regroupe tous les appels vers les endpoints de l’API Niralakka.</p>
+
+    <h3>3.2 assets</h3>
+    <p>Ressources statiques : CSS, images, icônes. Le thème Bootstrap est installé ici.</p>
+
+    <h3>3.3 auth</h3>
+    <p>Gestion de l’authentification et des sessions utilisateurs.</p>
+
+    <h3>3.4 components</h3>
+    <p>Composants réutilisables : boutons, formulaires, cartes, modales, etc.</p>
+
+    <h3>3.5 context</h3>
+    <p>Contient le <code>AuthContext</code> pour gérer l’état global de l’authentification.</p>
+
+    <h3>3.6 hooks</h3>
+    <p>Custom hooks réutilisables pour les appels API ou autres logiques spécifiques.</p>
+
+    <h3>3.7 queries</h3>
+    <p>Queries utilisant les custom hooks pour gérer les données côté front.</p>
+
+    <h3>3.8 routes</h3>
+    <p>Configuration des routes et de la navigation entre les pages.</p>
+
+    <h3>3.9 utils</h3>
+    <p>Fonctions utilitaires : formatage de date, gestion d’erreurs, etc.</p>
+
+    <h3>3.10 views</h3>
+    <p>Pages de l’application : Dashboard, Ticket, Projet, Statistiques...</p>
+  </section>
+
+  <section>
+    <h2>4. Fichiers principaux</h2>
+    <ul>
+      <li><code>App.js</code> : montage de l’application, layout global et routes.</li>
+      <li><code>index.js</code> : point d’entrée de React, rend l’application dans la div <code>root</code>.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Résumé de la navigation</h2>
+    <ol>
+      <li>L’utilisateur ouvre l’application via <code>index.html</code>.</li>
+      <li><code>index.js</code> monte le composant <code>App.js</code>.</li>
+      <li><code>App.js</code> gère le layout global et les routes.</li>
+      <li>Les pages (<code>views</code>) affichent le contenu en utilisant les composants (<code>components</code>) et hooks (<code>hooks</code>) pour récupérer les données depuis l’API (<code>api</code>).</li>
+    </ol>
+  </section>
+
+</main>
+
+<footer>
+  &copy; 2025 Niralakka - Documentation React
+</footer>
+
+</body>
+</html>
