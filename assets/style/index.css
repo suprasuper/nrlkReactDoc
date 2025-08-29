@@ -24,7 +24,7 @@ p.intro {
   font-size: 1.1em;
   color: #555;
   margin-bottom: 40px;
-  margin-top:40px;
+  margin-top: 40px;
 }
 
 nav {
@@ -71,4 +71,17 @@ footer {
 
 .niralakka_logo {
   height: 2em;
+}
+
+
+
+
+li a:hover{
+  text-decoration:none;
+}
+
+
+li a {
+  text-decoration: none; /* enlève le soulignement */
+  color: inherit;        /* garde la couleur du texte du li */
 }
