@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation Niralakka - API & Hooks</title>
+  <link href="assets/style.css" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <h1>Documentation Niralakka</h1>
+</header>
+
+<main>
+
+  <section>
+    <h2>Organisation API & Hooks</h2>
+    <p>
+      Le projet sépare les appels réseau et la logique React grâce à deux dossiers principaux :
+      <code>api/</code> et <code>hooks/</code>.
+    </p>
+    <pre>
+/api
+/hooks
+    </pre>
+  </section>
+
+  <section>
+    <h2>1. Dossier <code>api/</code></h2>
+    <p>
+      Contient toutes les fonctions qui communiquent avec le backend. Chaque fichier correspond à une ressource ou
+      un ensemble de routes.
+    </p>
+    <ul>
+      <li>Centralise toutes les requêtes HTTP.</li>
+      <li>Facilite les modifications si l'URL ou les headers changent.</li>
+      <li>Permet la réutilisation des fonctions dans différents contextes (tests, scripts...).</li>
+    </ul>
+    <pre>
+// api/clientApi.js
+import axios from "axios";
+
+export const getClientById = async (id) => {
+  const response = await axios.get(`http://localhost:8000/client/${id}`);
+  return response.data;
+};
+    </pre>
+  </section>
+
+  <section>
+    <h2>2. Dossier <code>hooks/</code></h2>
+    <p>
+      Contient les <em>custom hooks React</em> qui utilisent les fonctions du dossier <code>api/</code>.
+      Ils gèrent le chargement, les erreurs, le cache et adaptent les données pour les composants.
+    </p>
+    <ul>
+      <li>Utilisent les fonctions API pour récupérer ou modifier des données.</li>
+      <li>Gèrent les états <code>isLoading</code>, <code>isError</code>, etc.</li>
+      <li>Encapsulent la logique React et TanStack Query.</li>
+    </ul>
+    <pre>
+// hooks/useClient.js
+import { useQuery } from "@tanstack/react-query";
+import { getClientById } from "../api/clientApi";
+
+export const useClient = (id) => {
+  return useQuery({
+    queryKey: ["client", id],
+    queryFn: () => getClientById(id),
+  });
+};
+    </pre>
+  </section>
+
+  <section>
+    <h2>3. Pourquoi séparer <code>api/</code> et <code>hooks/</code> ?</h2>
+    <ul>
+      <li><strong>Séparation des responsabilités :</strong> <code>api/</code> pour le backend, <code>hooks/</code> pour React.</li>
+      <li><strong>Réutilisabilité :</strong> les fonctions API peuvent être utilisées dans plusieurs hooks.</li>
+      <li><strong>Testabilité :</strong> tu peux tester la fonction API indépendamment du hook.</li>
+      <li><strong>Évolutivité :</strong> changer la librairie React Query n'impacte pas l'API.</li>
+    </ul>
+    <div class="tip">
+      💡 Astuce : chaque ressource de l'API doit avoir ses hooks dédiés pour garder une architecture claire et maintenable.
+    </div>
+  </section>
+
+  <section>
+    <h2>Résumé</h2>
+    <ol>
+      <li><code>api/</code> : centralise toutes les requêtes HTTP pour les données backend.</li>
+      <li><code>hooks/</code> : pont entre l'API et React, gère états, cache et intégration avec TanStack Query.</li>
+    </ol>
+  </section>
+
+</main>
+
+<footer>
+  &copy; 2025 Niralakka - Documentation React
+</footer>
+
+</body>
+</html>

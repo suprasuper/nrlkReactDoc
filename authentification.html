@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation Niralakka - Authentification</title>
+  <link href="assets/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <header>
+    <h1>Documentation Niralakka</h1>
+  </header>
+
+  <main>
+
+    <section>
+      <h2>Authentification</h2>
+      <p>
+        Le projet utilise un système d'authentification basé sur <strong>React Context</strong> et
+        <strong>TanStack Query</strong>.  
+        Ce mécanisme permet de gérer :
+      </p>
+      <ul>
+        <li>la connexion de l'utilisateur,</li>
+        <li>la récupération de ses informations,</li>
+        <li>la déconnexion et la mise à jour de l'interface.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>1. AuthContext</h2>
+      <p>
+        Un Context React se réinitialise si l'application est rafraîchie : l'état <code>isLoggedIn</code> et les données utilisateur sont donc perdus.
+Pour éviter cela, nous utilisons un <code>useEffect</code> qui s'exécute au montage de l'application. Il appelle <code>refetchUser</code> pour vérifier la session via le backend et ainsi restaurer l'état d'authentification et les informations de l'utilisateur automatiquement.
+        <br/><code>AuthContext</code> est le point central de l'authentification.  
+        Il conserve :
+      </p>
+      <ul>
+        <li>l'état de connexion (<code>isLoggedIn</code>),</li>
+        <li>les informations de l'utilisateur (<code>user</code>),</li>
+        <li>un état de chargement et d'erreur,</li>
+        <li>et une méthode <code>logOut</code> pour gérer la déconnexion.</li>
+      </ul>
+      <p>
+        Au démarrage ou lors d'un rafraîchissement de page, le contexte réexécute une requête
+        <code>getCurrentUser</code> pour revalider la session grâce au cookie envoyé par le backend.
+      </p>
+    </section>
+
+    <section>
+      <h2>2. Connexion avec useLogin</h2>
+      <p>
+        La connexion se fait via le hook <code>useLogin</code>.  
+        Celui-ci utilise <strong>useMutation</strong> (TanStack Query) pour envoyer les identifiants au backend.  
+        En cas de succès :
+      </p>
+      <ul>
+        <li>le backend retourne un <strong>cookie sécurisé</strong> contenant le token,</li>
+        <li>le contexte met à jour <code>isLoggedIn</code> à <code>true</code>,</li>
+        <li>et les données utilisateur sont rafraîchies automatiquement avec <code>fetchUser</code>.</li>
+      </ul>
+      <div class="tip">
+        💡 <strong>Astuce :</strong> grâce aux cookies HttpOnly, le front n'a pas besoin de gérer manuellement le stockage du token.
+      </div>
+    </section>
+
+    <section>
+      <h2>3. Gestion des cookies</h2>
+      <p>
+        Le backend envoie un token sous forme de <strong>cookie HttpOnly</strong>.  
+        Cela apporte plusieurs avantages :
+      </p>
+      <ul>
+        <li>le cookie n'est pas accessible via <code>document.cookie</code>,</li>
+        <li>il est transmis automatiquement avec chaque requête HTTP, assurant que seul un utilisateur vérifié puisse effectuer des requêtes</li>
+        <li>il améliore la sécurité (évite le stockage manuel dans <code>localStorage</code> ou <code>sessionStorage</code>).</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. Cycle d'authentification</h2>
+      <ol>
+        <li>L'utilisateur envoie ses identifiants via <code>useLogin</code>.</li>
+        <li>Le backend vérifie et renvoie un cookie sécurisé avec le token.</li>
+        <li><code>AuthContext</code> appelle <code>getCurrentUser</code> pour récupérer les infos utilisateur.</li>
+        <li>L'application met à jour son interface (profil, accès aux routes protégées, etc.).</li>
+        <li>En cas de déconnexion, <code>logOut</code> vide le cache et remet l'état à <code>false</code>. Le backend supprime le token des cookies.</li>
+      </ol>
+    </section>
+
+    
+
+  </main>
+
+  <footer>
+    &copy; 2025 Niralakka - Documentation Authentification
+  </footer>
+
+</body>
+
+</html>

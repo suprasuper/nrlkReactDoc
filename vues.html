@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation Niralakka - Views</title>
+  <link href="assets/style.css" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <h1>Documentation Niralakka</h1>
+</header>
+
+<main>
+
+  <section>
+    <h2>Dossier Views</h2>
+    <p>
+      Le dossier <code>Views/</code> contient toutes les pages principales de l'application.  
+      Chaque fichier représente une page complète et correspond à une route définie dans <code>AppRoutes.js</code>.
+    </p>
+  </section>
+
+  <section>
+    <h2>1. Organisation des pages</h2>
+    <p>Les pages sont regroupées par fonctionnalité pour plus de clarté :</p>
+    <ul>
+      <li><code>/User</code> : pages liées à l'utilisateur (ex : <code>Profil.js</code>, <code>Statistiques.js</code>, <code>Calendrier.js</code>).</li>
+      <li><code>/Administration</code> : pages pour la gestion administrative (ex : <code>Admin.js</code>, <code>UserAdministration.js</code>, <code>GroupAdministration.js</code>).</li>
+      <li><code>/Tickets</code> : pages liées aux tickets (ex : <code>Tickets.js</code>, <code>Ticket.js</code>, <code>TicketsFermes.js</code>).</li>
+      <li><code>/Projets</code> : pages liées aux projets (ex : <code>Projets.js</code>, <code>Projet.js</code>).</li>
+      <li><code>/Client</code> : pages pour la gestion des clients (ex : <code>Clients.js</code>, <code>Client.js</code>).</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>2. Bonnes pratiques</h2>
+    <ul>
+      <li>Chaque page est autonome et importe uniquement les composants nécessaires depuis <code>components/</code>.</li>
+      <li>La logique métier ou les appels API sont réalisés via des <strong>hooks personnalisés</strong> pour garder les pages propres et lisibles.</li>
+      <li>Les pages sont réutilisables et faciles à maintenir grâce à cette séparation des responsabilités.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>3. Interaction avec AppRoutes et Layout</h2>
+    <p>
+      Les pages de <code>Views</code> sont rendues via <code>AppRoutes.js</code>.  
+      Elles sont encapsulées dans le <strong>Layout</strong> pour afficher Navbar, Topbar et Footer, sauf la page <code>Login</code> qui n'utilise pas Layout.
+    </p>
+  </section>
+
+  <section>
+    <h2>4. Passage de props et routes dynamiques</h2>
+    <p>
+      Les vues sont des <strong>composants fonctionnels</strong>. Depuis <code>AppRoutes.js</code>, il est possible de leur passer des variables via des props.  
+      Par exemple : <code>&lt;Projets titre="Projets" /&gt;</code> permet à la page <code>Projets</code> de recevoir un titre et de l'utiliser pour l'affichage ou la logique interne.
+    </p>
+    <p>
+      Pour les routes dynamiques, comme <code>/ticket/:ticketId</code> ou <code>/projet/:projetId</code>, React Router fournit le hook <code>useParams</code>.  
+      Il permet de récupérer les paramètres directement dans la vue et de les utiliser pour charger des données spécifiques depuis l'API.
+    </p>
+    <div class="tip">
+      💡 Cette approche permet de combiner des vues réutilisables et paramétrables avec des routes dynamiques, garantissant une navigation flexible et un affichage correct des données.
+    </div>
+  </section>
+  
+
+</main>
+
+<footer>
+  &copy; 2025 Niralakka - Documentation React
+</footer>
+
+</body>
+</html>

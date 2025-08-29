@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation Niralakka - Routing</title>
+  <link href="assets/style.css" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <h1>Documentation Niralakka</h1>
+</header>
+
+<main>
+
+  <section>
+    <h2>Routing de l'application</h2>
+    <p>
+      L'application utilise <strong>React Router</strong> pour gérer la navigation côté client.  
+      La structure est organisée pour séparer la mise en page globale, la logique des pages et l'état global.
+    </p>
+  </section>
+
+  <section>
+    <h2>1. App.js : point d'entrée</h2>
+    <p>
+      <code>App.js</code> encapsule toute l'application avec plusieurs composants globaux : 
+    </p>
+    <ul>
+      <li><strong>Router</strong> : permet la navigation côté client.</li>
+      <li><strong>AuthProvider</strong> : gère l'état de connexion et sécurise les routes privées.</li>
+      <li><strong>ToastContainer</strong> : permet d'afficher des notifications globales.</li>
+      <li><strong>AppContent</strong> : contient toutes les routes de l'application.</li>
+    </ul>
+    <div class="tip">
+      💡 Cette organisation centralise la configuration globale et sépare clairement les responsabilités.
+    </div>
+  </section>
+
+  <section>
+    <h2>2. AppContent et Layout</h2>
+    <p>
+      <strong>AppContent</strong> définit les routes principales :  
+      - La route <code>/</code> correspond à la page <code>Login</code> et n'utilise pas Layout.  
+      - Toutes les autres routes passent par le <strong>Layout</strong>.
+    </p>
+    <p>
+      <strong>Layout</strong> est un composant qui encapsule toutes les pages connectées et fournit la structure globale :  
+    </p>
+    <ul>
+      <li>Navbar</li>
+      <li>Topbar</li>
+      <li>Footer</li>
+    </ul>
+    <p>
+      Le Layout permet de <strong>réutiliser la mise en page</strong> sur toutes les pages sans répéter le code et de conditionner l'affichage selon la route.
+    </p>
+  </section>
+
+  <section>
+    <h2>3. AppRoutes : centralisation des pages</h2>
+    <p>
+      <code>AppRoutes.js</code> contient toutes les pages de l'application après connexion.  
+      Chaque route pointe vers un composant de page spécifique et certaines routes utilisent des paramètres dynamiques.
+    </p>
+    
+    <div class="tip">
+      💡 L'intérêt d'AppRoutes est de centraliser toutes les pages et de faciliter l'ajout ou la modification d'une route sans toucher au layout global.
+    </div>
+  </section>
+
+  <section>
+    <h2>4. Navigation et récupération de paramètres</h2>
+    <p>
+      Pour naviguer dans l'application, nous utilisons les outils de React Router :
+    </p>
+    <ul>
+      <li><code>NavLink</code> : pour créer des liens de navigation qui peuvent appliquer automatiquement un style actif selon la page courante.</li>
+      <li><code>useNavigate</code> : pour naviguer de manière automatique dans l'application, par exemple après une action ou un formulaire.</li>
+      <li><code>useParams</code> : pour les routes le permettant : <code>path="/ticket/:ticketId"</code>récupérer les paramètres dynamiques des routes (comme <code>:ticketId</code> ou <code>:projetId</code>) afin de charger les données spécifiques à l'élément sélectionné.</li>
+    </ul>
+    <p>
+      Cette combinaison permet de gérer la navigation interne et la récupération dynamique des données de manière propre et réactive.
+    </p>
+    <pre>
+  // Exemple de récupération de paramètre dynamique
+  import { useParams } from 'react-router-dom';
+  
+  function TicketPage() {
+    const { ticketId } = useParams();
+    // utiliser ticketId pour récupérer les données du ticket
+  }
+    </pre>
+    <pre>
+  // Exemple de navigation automatique
+  import { useNavigate } from 'react-router-dom';
+  
+  function SubmitForm() {
+    const navigate = useNavigate();
+  
+    const handleSubmit = () => {
+      // après la validation
+      navigate('/tickets');
+    };
+  }
+    </pre>
+  </section>
+  
+
+  <section>
+    <h2>5. Bonnes pratiques</h2>
+    <ul>
+      <li>Séparer la structure globale (Layout) et le contenu des pages.</li>
+      <li>Centraliser les routes dans <code>AppRoutes</code> pour une maintenance facile.</li>
+      <li>Encapsuler l'application avec <code>Router</code>, <code>AuthProvider</code> et <code>ToastContainer</code> pour gérer navigation, authentification et notifications globales.</li>
+      <li>Utiliser des routes dynamiques pour accéder aux ressources spécifiques.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  &copy; 2025 Niralakka - Documentation React
+</footer>
+
+</body>
+</html>
