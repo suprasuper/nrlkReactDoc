@@ -18,16 +18,16 @@ body {
   }
   
   .arrow-link {
-    color: inherit;
-    text-decoration: none; 
+    color: inherit; /* prend la couleur du parent */
+    text-decoration: none; /* supprime le souligné */
   }
   
   .arrow-link:link,
   .arrow-link:visited,
   .arrow-link:hover,
   .arrow-link:active {
-    color: inherit;
-    text-decoration: none; 
+    color: inherit; /* couleur identique dans tous les états */
+    text-decoration: none; /* pas de souligné même au survol */
   }
   
   a + h2 {
